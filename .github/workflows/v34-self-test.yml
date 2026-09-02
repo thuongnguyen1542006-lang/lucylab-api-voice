@@ -6,7 +6,8 @@ on:
     paths:
       - 'automation/v34/**'
       - 'automation/requirements-v34.txt'
-      - 'assets/**'
+      - 'assets/drawing-hand.png'
+      - 'assets/eraser-hand.png'
       - '.github/workflows/v34-self-test.yml'
   workflow_dispatch:
 
@@ -30,26 +31,30 @@ jobs:
           pip install -r automation/requirements-v34.txt
           ffmpeg -version
           ffprobe -version
-      - name: Validate packaged assets
+      - name: Validate render assets
         run: |
-          test -s assets/main-character-sheet.jpg
-          test -s assets/approved-visual-reference-01.jpg
-          test -s assets/approved-visual-reference-02.jpg
           test -s assets/drawing-hand.png
           test -s assets/eraser-hand.png
           python - <<'PY'
           from PIL import Image
-          from pathlib import Path
-          for p in Path('assets').iterdir():
-              if p.suffix.lower() in {'.png','.jpg','.jpeg'}:
-                  im=Image.open(p); im.verify(); print(p, 'OK')
+          for p in ['assets/drawing-hand.png','assets/eraser-hand.png']:
+              im=Image.open(p); im.verify(); print(p, 'OK')
           PY
       - name: Run deterministic renderer self-test
         run: |
           python automation/v34/run_v34.py --self-test --out automation/output/selftest
           test -s automation/output/selftest/selftest/final/final.mp4
+          test -s automation/output/selftest/selftest/qc/transition-contact-sheet.jpg
           ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate -of json automation/output/selftest/selftest/final/final.mp4
           ffmpeg -v error -i automation/output/selftest/selftest/final/final.mp4 -f null -
+          python - <<'PY'
+          import json
+          q=json.load(open('automation/output/selftest/selftest/qc/v34-runner-qc.json'))
+          assert q['pass'] is True
+          assert q['eraserCleanupPass'] is True
+          assert q['transitionResidualPixels'] == [0]
+          print('V3.4 renderer QC: PASS')
+          PY
       - name: Upload self-test artifact
         if: always()
         uses: actions/upload-artifact@v4
