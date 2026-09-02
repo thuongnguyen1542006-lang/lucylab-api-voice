@@ -24,6 +24,8 @@ jobs:
           python-version: '3.11'
       - name: Install runtime
         run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
           python -m pip install --upgrade pip
           pip install -r automation/requirements-v34.txt
           ffmpeg -version
