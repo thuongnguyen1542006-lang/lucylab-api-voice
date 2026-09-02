@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 4,
+  "runnerVersion": "3.4.0",
+  "stage": "timing",
+  "enabled": true,
+  "jobId": "v34-timing-secret-check-20260902",
+  "script": "Thu nhập thụ động không phải là ngồi yên mà tiền tự đến. Bạn cần xây một tài sản hoặc hệ thống trước, rồi nó mới có thể tiếp tục tạo dòng tiền.",
+  "voiceAlias": "co-nhan",
+  "voiceSpeed": 1.0
+}
