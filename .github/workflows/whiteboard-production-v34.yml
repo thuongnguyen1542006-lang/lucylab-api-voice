@@ -73,20 +73,35 @@ jobs:
           test -f timing_input/audio/subtitles.srt
           test -f timing_input/timing/timing.json
 
+      - name: Validate locked storyboard contract
+        if: steps.meta.outputs.stage == 'production'
+        run: |
+          python automation/v34/validate_storyboard_contract.py automation/jobs/current.json
+
       - name: Validate ChatGPT Web source package
         if: steps.meta.outputs.stage == 'production'
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
+          from PIL import Image
           j=json.load(open('automation/jobs/current.json'))
           sb=j.get('storyboard') or {}
           assert sb.get('locked') is True, 'storyboard must be locked'
-          for page in sb.get('pages', []):
+          for idx,page in enumerate(sb.get('pages', []), 1):
               assert page.get('sourceMethod') == 'chatgpt-web-image-generation'
               p=Path(page['sourcePath'])
               assert p.is_file() and p.stat().st_size > 1000, f'missing source image: {p}'
-          print('ChatGPT Web storyboard + source images: OK')
+              with Image.open(p) as im:
+                  im.verify()
+              with Image.open(p) as im:
+                  assert im.size == (1080,1920), f'page {idx} must be 1080x1920, got {im.size}'
+              q=page.get('sourceVisualQc') or {}
+              for key in ('approvedSketchStyle','notFlatVectorOrClipart','organicLineTexture','believableObjectDetail'):
+                  assert q.get(key) is True, f'page {idx} sourceVisualQc.{key} must pass'
+              if page.get('containsCharacter'):
+                  assert q.get('matchesCharacterStyle') is True, f'page {idx} character style must pass'
+          print('ChatGPT Web storyboard + source images: PASS')
           PY
 
       - name: Run V3.4
@@ -97,6 +112,12 @@ jobs:
           python automation/v34/run_v34.py \
             --job automation/jobs/current.json \
             --out automation/output/current
+
+      - name: Validate final project
+        if: steps.meta.outputs.stage == 'production'
+        run: |
+          job_id=$(python -c "import json; print(json.load(open('automation/jobs/current.json'))['jobId'])")
+          python automation/v34/validate_project.py "automation/output/current/$job_id"
 
       - name: Upload artifact
         if: always()
