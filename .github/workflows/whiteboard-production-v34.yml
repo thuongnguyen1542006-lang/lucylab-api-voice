@@ -21,13 +21,22 @@ jobs:
     timeout-minutes: 90
     env:
       PYTHONUNBUFFERED: '1'
-      VISUAL_PROVIDER: ${{ vars.VISUAL_PROVIDER }}
+      VISUAL_PROVIDER: openai
+      OPENAI_IMAGE_MODEL: gpt-image-2
+      OPENAI_VISION_MODEL: gpt-5.6-luna
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Install V3.4 runtime
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r automation/requirements-v34.txt
+          ffmpeg -version
+          ffprobe -version
 
       - name: Resolve stage
         id: meta
@@ -37,15 +46,35 @@ jobs:
           echo "stage=$stage" >> "$GITHUB_OUTPUT"
           if [ "$stage" = "timing" ]; then
             echo "artifact=whiteboard-v34-timing" >> "$GITHUB_OUTPUT"
-          else
+          elif [ "$stage" = "production" ]; then
             echo "artifact=whiteboard-v34-current" >> "$GITHUB_OUTPUT"
+          else
+            echo "Invalid stage: $stage" >&2
+            exit 2
           fi
+
+      - name: Download exact timing artifact
+        if: steps.meta.outputs.stage == 'production'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          run_id=$(python -c "import json; j=json.load(open('automation/jobs/current.json')); print(j.get('timingRunId',''))")
+          if [ -z "$run_id" ]; then
+            echo 'JOB_CONTRACT_ERROR: production requires timingRunId' >&2
+            exit 2
+          fi
+          mkdir -p timing_input
+          gh run download "$run_id" --repo "$GITHUB_REPOSITORY" -n whiteboard-v34-timing -D timing_input
+          test -f timing_input/timing/timing.json
+          test -f timing_input/audio/voice.wav
+          test -f timing_input/audio/subtitles.srt
 
       - name: Run V3.4
         env:
           LUCYLAB_API_KEY: ${{ secrets.LUCYLAB_API_KEY }}
-          VISUAL_API_KEY: ${{ secrets.VISUAL_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          V34_TIMING_DIR: timing_input
         run: |
           python automation/v34/run_v34.py \
             --job automation/jobs/current.json \
