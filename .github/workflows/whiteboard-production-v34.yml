@@ -1,0 +1,62 @@
+name: Whiteboard Production V3.4
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'automation/jobs/current.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: whiteboard-v34-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      PYTHONUNBUFFERED: '1'
+      VISUAL_PROVIDER: ${{ vars.VISUAL_PROVIDER }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Resolve stage
+        id: meta
+        shell: bash
+        run: |
+          stage=$(python -c "import json; print(json.load(open('automation/jobs/current.json'))['stage'])")
+          echo "stage=$stage" >> "$GITHUB_OUTPUT"
+          if [ "$stage" = "timing" ]; then
+            echo "artifact=whiteboard-v34-timing" >> "$GITHUB_OUTPUT"
+          else
+            echo "artifact=whiteboard-v34-current" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run V3.4
+        env:
+          LUCYLAB_API_KEY: ${{ secrets.LUCYLAB_API_KEY }}
+          VISUAL_API_KEY: ${{ secrets.VISUAL_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python automation/v34/run_v34.py \
+            --job automation/jobs/current.json \
+            --out automation/output/current
+
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.meta.outputs.artifact }}
+          path: automation/output/current
+          if-no-files-found: warn
+          retention-days: 7
+          compression-level: 6
