@@ -44,6 +44,10 @@ jobs:
           test -s automation/output/selftest/selftest/qc/transition-contact-sheet.jpg
           ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate -of json automation/output/selftest/selftest/final/final.mp4
           ffmpeg -v error -i automation/output/selftest/selftest/final/final.mp4 -f null -
+      - name: Run hard gates
+        run: |
+          python automation/v34/validate_storyboard_contract.py automation/output/selftest/selftest/project.json
+          python automation/v34/validate_project.py automation/output/selftest/selftest
           python - <<'PY'
           import json
           q=json.load(open('automation/output/selftest/selftest/qc/v34-runner-qc.json'))
