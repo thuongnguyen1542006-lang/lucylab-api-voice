@@ -37,6 +37,10 @@ jobs:
           ffmpeg -version
           ffprobe -version
 
+      - name: Prepare drawing and eraser overlays
+        run: |
+          python automation/v34/prepare_overlay_assets.py
+
       - name: Resolve stage
         id: meta
         shell: bash
