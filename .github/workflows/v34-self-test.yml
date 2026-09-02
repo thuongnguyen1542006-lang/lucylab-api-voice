@@ -1,0 +1,57 @@
+name: V3.4 Runner Self Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'automation/v34/**'
+      - 'automation/requirements-v34.txt'
+      - 'assets/**'
+      - '.github/workflows/v34-self-test.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  self-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install runtime
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r automation/requirements-v34.txt
+          ffmpeg -version
+          ffprobe -version
+      - name: Validate packaged assets
+        run: |
+          test -s assets/main-character-sheet.jpg
+          test -s assets/approved-visual-reference-01.jpg
+          test -s assets/approved-visual-reference-02.jpg
+          test -s assets/drawing-hand.png
+          test -s assets/eraser-hand.png
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          for p in Path('assets').iterdir():
+              if p.suffix.lower() in {'.png','.jpg','.jpeg'}:
+                  im=Image.open(p); im.verify(); print(p, 'OK')
+          PY
+      - name: Run deterministic renderer self-test
+        run: |
+          python automation/v34/run_v34.py --self-test --out automation/output/selftest
+          test -s automation/output/selftest/selftest/final/final.mp4
+          ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate -of json automation/output/selftest/selftest/final/final.mp4
+          ffmpeg -v error -i automation/output/selftest/selftest/final/final.mp4 -f null -
+      - name: Upload self-test artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: whiteboard-v34-selftest
+          path: automation/output/selftest
+          retention-days: 3
