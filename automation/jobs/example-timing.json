@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 3,
+  "runnerVersion": "3.4.0",
+  "stage": "timing",
+  "enabled": true,
+  "jobId": "example-v34-timing",
+  "script": "Nội dung narration được ChatGPT ghi vào đây.",
+  "voiceAlias": "co-nhan",
+  "voiceSpeed": 1.0
+}
