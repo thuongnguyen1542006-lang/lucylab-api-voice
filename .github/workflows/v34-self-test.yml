@@ -6,8 +6,6 @@ on:
     paths:
       - 'automation/v34/**'
       - 'automation/requirements-v34.txt'
-      - 'assets/drawing-hand.png'
-      - 'assets/eraser-hand.png'
       - '.github/workflows/v34-self-test.yml'
   workflow_dispatch:
 
@@ -31,10 +29,9 @@ jobs:
           pip install -r automation/requirements-v34.txt
           ffmpeg -version
           ffprobe -version
-      - name: Validate render assets
+      - name: Prepare and validate render overlays
         run: |
-          test -s assets/drawing-hand.png
-          test -s assets/eraser-hand.png
+          python automation/v34/prepare_overlay_assets.py
           python - <<'PY'
           from PIL import Image
           for p in ['assets/drawing-hand.png','assets/eraser-hand.png']:
