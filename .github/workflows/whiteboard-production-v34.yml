@@ -21,9 +21,6 @@ jobs:
     timeout-minutes: 90
     env:
       PYTHONUNBUFFERED: '1'
-      VISUAL_PROVIDER: openai
-      OPENAI_IMAGE_MODEL: gpt-image-2
-      OPENAI_VISION_MODEL: gpt-5.6-luna
     steps:
       - uses: actions/checkout@v4
 
@@ -68,14 +65,29 @@ jobs:
           fi
           mkdir -p timing_input
           gh run download "$run_id" --repo "$GITHUB_REPOSITORY" -n whiteboard-v34-timing -D timing_input
-          test -f timing_input/timing/timing.json
           test -f timing_input/audio/voice.wav
           test -f timing_input/audio/subtitles.srt
+          test -f timing_input/timing/timing.json
+
+      - name: Validate ChatGPT Web source package
+        if: steps.meta.outputs.stage == 'production'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          j=json.load(open('automation/jobs/current.json'))
+          sb=j.get('storyboard') or {}
+          assert sb.get('locked') is True, 'storyboard must be locked'
+          for page in sb.get('pages', []):
+              assert page.get('sourceMethod') == 'chatgpt-web-image-generation'
+              p=Path(page['sourcePath'])
+              assert p.is_file() and p.stat().st_size > 1000, f'missing source image: {p}'
+          print('ChatGPT Web storyboard + source images: OK')
+          PY
 
       - name: Run V3.4
         env:
           LUCYLAB_API_KEY: ${{ secrets.LUCYLAB_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           V34_TIMING_DIR: timing_input
         run: |
           python automation/v34/run_v34.py \
@@ -87,7 +99,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.meta.outputs.artifact }}
-          path: automation/output/current
+          path: automation/output/current/*
           if-no-files-found: warn
           retention-days: 7
           compression-level: 6
