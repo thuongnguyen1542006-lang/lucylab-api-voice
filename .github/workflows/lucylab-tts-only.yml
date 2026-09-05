@@ -1,0 +1,64 @@
+name: LucyLab TTS Only
+
+on:
+  push:
+    branches: [main]
+    paths: ['automation/tts_only/jobs/*.json']
+  workflow_dispatch:
+    inputs:
+      job_path:
+        description: Immutable TTS request path
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lucylab-tts-only
+  cancel-in-progress: false
+
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install media probe
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Resolve immutable requests
+        env:
+          REQUEST_PATH: ${{ inputs.job_path }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          explicit = os.environ.get('REQUEST_PATH', '')
+          if explicit:
+              paths = [explicit]
+          else:
+              paths = subprocess.check_output(['git', 'diff-tree', '--no-commit-id', '--name-only', '--diff-filter=A', '-r', 'HEAD']).decode().splitlines()
+              paths = [p for p in paths if p.startswith('automation/tts_only/jobs/') and p.endswith('.json')]
+          assert paths, 'No newly added TTS request'
+          for p in paths:
+              assert Path(p).parent.as_posix() == 'automation/tts_only/jobs' and Path(p).suffix == '.json'
+          Path('requests.json').write_text(json.dumps(paths))
+          PY
+      - name: Synthesize scenes through existing LucyLab bridge
+        env:
+          LUCYLAB_API_KEY: ${{ secrets.LUCYLAB_API_KEY }}
+        run: python automation/tts_only/run_job.py --requests requests.json --out tts_output
+      - name: Upload exact run output and checkpoints
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lucylab-tts-${{ github.run_id }}
+          path: tts_output/
+          retention-days: 30
+          if-no-files-found: warn
+
