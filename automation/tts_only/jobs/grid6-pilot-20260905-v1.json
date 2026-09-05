@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 4,
+  "stage": "timing",
+  "jobId": "grid6-pilot-20260905-v1",
+  "voiceAlias": "co-nhan",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "s01",
+      "text": "Khi bắt đầu học một kỹ năng, bạn dễ thấy mình lúng túng. Hãy chọn một mục tiêu nhỏ, đủ rõ để biết mình cần làm gì. Một cuốn sách phù hợp giúp bạn hiểu điều cơ bản. Dành mười lăm phút mỗi ngày, thay vì chờ lúc thật rảnh. Ghi lại điều vừa học bằng lời của mình. Tiến bộ giống như bước lên cầu thang, từng bậc một."
+    },
+    {
+      "sceneId": "s02",
+      "text": "Một tờ lịch giúp bạn nhìn thấy những ngày đã luyện tập. Mỗi lần cầm bút thực hành, hãy tập trung sửa một lỗi cụ thể. Sau đó, nhìn kỹ kết quả để biết điều gì đã tốt hơn. Việc học giống như chăm một mầm cây, cần đều đặn hơn là nóng vội. Lặp lại cách làm đúng sẽ giúp thói quen vận hành trơn tru. Sự tự tin đến từ những điều bạn thật sự làm được."
+    }
+  ]
+}
