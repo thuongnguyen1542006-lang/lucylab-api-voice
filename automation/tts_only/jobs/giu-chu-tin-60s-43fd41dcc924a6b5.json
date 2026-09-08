@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 4,
+  "stage": "timing",
+  "jobId": "giu-chu-tin-60s-43fd41dcc924a6b5",
+  "voiceAlias": "co-nhan",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "s01",
+      "text": "Mất tiền còn kiếm lại được, mất niềm tin rất khó lấy lại. Chữ tín là thứ người khác dùng để quyết định có nên đi cùng bạn lâu dài hay không. Một lời nói ra đều có giá."
+    },
+    {
+      "sceneId": "s02",
+      "text": "Giữ chữ tín bắt đầu từ những việc rất nhỏ. Đã hẹn thì đúng giờ. Đã nhận lời thì cố làm. Không chắc làm được, đừng hứa cho vui miệng. Cân nhắc kỹ rồi hãy nhận lời."
+    },
+    {
+      "sceneId": "s03",
+      "text": "Một lần thất hứa có thể được bỏ qua. Nhưng thất hứa nhiều lần sẽ biến lời nói của bạn thành thứ không còn trọng lượng. Khi ấy, cơ hội cũng âm thầm rời đi. Mất uy tín, hậu quả kéo dài."
+    },
+    {
+      "sceneId": "s04",
+      "text": "Người có chữ tín không phải người chưa từng sai. Họ biết báo trước khi có thay đổi, nhận trách nhiệm khi thất hứa và tìm cách sửa cho đúng điều đã cam kết. Sửa sai đúng cách giữ được tín."
+    },
+    {
+      "sceneId": "s05",
+      "text": "Tiền bạc, quan hệ và cơ hội đều có thể đến rồi đi. Nhưng uy tín tích lũy qua năm tháng sẽ mở nhiều cánh cửa. Làm người, hãy để lời mình nói ra có giá trị. Niềm tin mở thêm cơ hội."
+    }
+  ]
+}
