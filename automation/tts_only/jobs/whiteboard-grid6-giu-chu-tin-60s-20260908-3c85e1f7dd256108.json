@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 4,
+  "stage": "timing",
+  "jobId": "whiteboard-grid6-giu-chu-tin-60s-20260908-3c85e1f7dd256108",
+  "voiceAlias": "co-nhan",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {"sceneId":"s02","text":"Giữ chữ tín bắt đầu từ chuyện nhỏ. Đi đúng giờ khi đã hẹn. Trả đúng ngày khi đã vay. Việc đã nhận thì làm đến nơi. Lặp lại đủ lâu, bạn không cần tự giới thiệu; cách sống nói rằng bạn đáng tin."},
+    {"sceneId":"s03","text":"Thất hứa một lần có thể được cảm thông. Nhưng nếu lần nào cũng có lý do, lời hứa sẽ mất giá trị. Người khác sẽ ngừng giao việc, ngừng chia sẻ cơ hội và không muốn đồng hành. Mất niềm tin âm thầm, hậu quả dài lâu."},
+    {"sceneId":"s04","text":"Muốn giữ chữ tín, đừng hứa quá khả năng. Đã hứa thì làm đến cùng. Có biến cố, hãy báo sớm, nói thật, chịu trách nhiệm. Chữ tín không cần hoàn hảo, chỉ cần nhất quán. Giữ niềm tin là giữ quan hệ và cơ hội lâu dài."}
+  ]
+}
