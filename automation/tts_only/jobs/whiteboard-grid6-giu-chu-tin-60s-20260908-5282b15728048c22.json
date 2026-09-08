@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 4,
+  "stage": "timing",
+  "jobId": "whiteboard-grid6-giu-chu-tin-60s-20260908-5282b15728048c22",
+  "voiceAlias": "co-nhan",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {"sceneId":"s04","text":"Muốn giữ chữ tín, đừng hứa quá khả năng. Đã hứa làm đến cùng. Có biến cố, hãy báo sớm, nói thật, chịu trách nhiệm. Chữ tín không cần hoàn hảo, chỉ cần nhất quán. Giữ niềm tin là giữ quan hệ lâu dài."}
+  ]
+}
