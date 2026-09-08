@@ -1,0 +1,48 @@
+name: LucyLab TTS Resume
+
+on:
+  push:
+    branches: [main]
+    paths: ['automation/tts_only/resume/*.json']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lucylab-tts-resume
+  cancel-in-progress: false
+
+jobs:
+  resume:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install media probe
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Resolve resume requests
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          paths = subprocess.check_output(['git','diff-tree','--no-commit-id','--name-only','--diff-filter=A','-r','HEAD']).decode().splitlines()
+          paths = [p for p in paths if p.startswith('automation/tts_only/resume/') and p.endswith('.json')]
+          assert paths, 'No newly added resume request'
+          open('resume_requests.json','w').write(json.dumps(paths))
+          PY
+      - name: Resume existing exports and synthesize missing scenes
+        env:
+          LUCYLAB_API_KEY: ${{ secrets.LUCYLAB_API_KEY }}
+        run: python automation/tts_only/resume_job.py
+      - name: Upload exact run output and checkpoints
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lucylab-tts-${{ github.run_id }}
+          path: tts_output/
+          retention-days: 30
+          if-no-files-found: warn
