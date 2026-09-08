@@ -1,0 +1,9 @@
+{
+"schemaVersion":4,
+"stage":"timing",
+"jobId":"giu-chu-tin-60s-1b344c6a0467a01e",
+"voiceAlias":"co-nhan",
+"voiceSpeed":1.0,
+"bridgeSha256":"04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+"scenes":[{"sceneId":"s04","text":"Người có chữ tín không phải người chưa từng sai. Họ biết báo trước khi có thay đổi, nhận trách nhiệm khi thất hứa và tìm cách sửa cho đúng điều đã cam kết. Xin lỗi phải đi cùng việc sửa sai."}]
+}
