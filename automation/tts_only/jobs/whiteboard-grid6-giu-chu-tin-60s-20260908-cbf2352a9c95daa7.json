@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 4,
+  "stage": "timing",
+  "jobId": "whiteboard-grid6-giu-chu-tin-60s-20260908-cbf2352a9c95daa7",
+  "voiceAlias": "co-nhan",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {"sceneId":"s01","text":"Mất tiền còn kiếm lại được, mất niềm tin rất khó lấy lại. Chữ tín không nằm ở lời nói hay, mà ở việc bạn làm sau lời hứa. Một người chưa giàu, chưa giỏi, nhưng nếu nói được làm được, người khác vẫn muốn tin, muốn hợp tác và đồng hành lâu dài."},
+    {"sceneId":"s02","text":"Giữ chữ tín bắt đầu từ chuyện nhỏ. Đi đúng giờ khi đã hẹn. Trả đúng ngày khi đã vay. Việc đã nhận thì làm đến nơi. Khi những hành động ấy lặp lại đủ lâu, người khác không cần bạn tự giới thiệu. Cách bạn sống sẽ tự nói rằng bạn đáng tin."},
+    {"sceneId":"s03","text":"Thất hứa một lần có thể được cảm thông. Nhưng nếu lần nào cũng có lý do, lời hứa sẽ dần mất giá trị. Người khác sẽ ngừng giao việc, ngừng chia sẻ cơ hội, rồi không còn muốn đồng hành. Mất niềm tin thường âm thầm, nhưng hậu quả kéo dài."},
+    {"sceneId":"s04","text":"Muốn giữ chữ tín, đừng hứa quá khả năng. Đã hứa thì ghi nhớ và làm đến cùng. Nếu có biến cố, hãy báo sớm, nói thật và chịu trách nhiệm. Chữ tín không đòi bạn hoàn hảo; nó đòi bạn nhất quán. Giữ được niềm tin là giữ được quan hệ và cơ hội lâu dài."}
+  ]
+}
