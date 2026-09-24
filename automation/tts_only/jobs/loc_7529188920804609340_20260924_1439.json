@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 4,
+  "stage": "timing",
+  "jobId": "loc_7529188920804609340_20260924_1439",
+  "voiceAlias": "co-nhan",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {"sceneId":"v01","text":"Mùa hè bật điều hòa ngủ"},
+    {"sceneId":"v02","text":"Mũi khô hoặc cổ khô"},
+    {"sceneId":"v03","text":"Cứ sắm một chiếc như tôi"},
+    {"sceneId":"v04","text":"Máy tạo ẩm siêu tiện"},
+    {"sceneId":"v05","text":"Sương phun dày và mịn"},
+    {"sceneId":"v06","text":"Xịt chút nước hoa vào"},
+    {"sceneId":"v07","text":"Đặt đâu cũng được"},
+    {"sceneId":"v08","text":"Thành máy tạo ẩm thơm"},
+    {"sceneId":"v09","text":"Nhỏ vài giọt nước hoa"},
+    {"sceneId":"v10","text":"Không đọng, bàn vẫn khô"},
+    {"sceneId":"v11","text":"Thiết kế dáng bông hoa"},
+    {"sceneId":"v12","text":"Bấm hai lần, bật đèn ngủ"},
+    {"sceneId":"v13","text":"Dùng điều hòa lâu mùa hè"},
+    {"sceneId":"v14","text":"Miệng lưỡi dễ bị khô"},
+    {"sceneId":"v15","text":"Nhà nào cũng nên có"}
+  ]
+}
