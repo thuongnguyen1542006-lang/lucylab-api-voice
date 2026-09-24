@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 4,
+  "stage": "timing",
+  "jobId": "douyin-spoon-full-20260924-v1",
+  "voiceAlias": "co-nhan",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {"sceneId":"s01","text":"Một chiếc muỗng mà có tới năm công dụng, thiết kế quá thông minh."},
+    {"sceneId":"s02","text":"Mỗi lỗ đều có tác dụng, không chỉ để vớt đồ ăn."},
+    {"sceneId":"s03","text":"Đầu tiên, nó là một dụng cụ nghiền."},
+    {"sceneId":"s04","text":"Nghiền tỏi, gừng cực tiện, thành phẩm lại mịn."},
+    {"sceneId":"s05","text":"Phần cong còn dùng nghiền khoai tây hoặc chuối."},
+    {"sceneId":"s06","text":"Nó còn tách lòng trắng trứng, làm bánh hay món tráng miệng rất tiện."},
+    {"sceneId":"s07","text":"Trên cán vừa có chỗ treo, vừa mở được nắp chai."},
+    {"sceneId":"s08","text":"Chất liệu thép không gỉ ba không bốn, cầm rất chắc tay."},
+    {"sceneId":"s09","text":"Muỗng dày, đập óc chó cũng ổn. Quá thích chiếc này."}
+  ]
+}
