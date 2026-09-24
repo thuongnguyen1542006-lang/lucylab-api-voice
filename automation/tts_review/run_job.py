@@ -13,6 +13,7 @@ import time
 
 ALLOWED_VOICES = {
     "my-review": "vcXEe1p3FxPfpswf3BhwbG",
+    "chi-mai": "cLZiqtzLcKYqwYrWJemAJK",
 }
 
 def digest(path):
