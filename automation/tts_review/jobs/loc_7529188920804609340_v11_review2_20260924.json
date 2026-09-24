@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "loc_7529188920804609340_v11_review2_20260924",
+  "voiceAlias": "my-review",
+  "voiceId": "vcXEe1p3FxPfpswf3BhwbG",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "review01",
+      "text": "Mùa hè nằm điều hòa lâu thì mũi với cổ rất dễ bị khô, nên dạo này mình để sẵn chiếc máy tạo ẩm mini này ở cạnh giường. Máy nhỏ gọn nhưng hơi sương phun ra khá dày, hạt sương mịn nhìn rất dễ chịu. Muốn phòng thơm hơn thì mình nhỏ thêm vài giọt nước hoa vào, vừa tạo ẩm vừa có mùi thơm nhẹ. Điểm mình thích là sương không đọng thành giọt nên mặt bàn vẫn khô ráo. Kiểu dáng bông hoa nhìn cũng xinh, để ở đâu cũng gọn mắt. Buổi tối bấm hai lần là bật được đèn ngủ. Ai thường xuyên nằm điều hòa mùa hè thì trong nhà nên có một chiếc như thế này."
+    }
+  ]
+}
