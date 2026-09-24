@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "loc_video_test_v11_chimai_karaoke_20260924",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 0.95,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "review01",
+      "text": "Nhà vệ sinh nhỏ mà nhiều đồ thì chiếc kệ treo tường này khá tiện. Gắn lên tường là có thêm chỗ để giấy, khăn ướt và đồ dùng lặt vặt mà không chiếm diện tích sàn. Kệ có ngăn kéo, hộc kín và khe lấy giấy riêng nên nhìn rất gọn. Các mô đun có thể ghép theo nhu cầu, sau đó đặt thêm mặt gỗ phía trên là tổng thể đẹp hơn hẳn. Mặt trên còn để được điện thoại, đồ thơm phòng hoặc đồ trang trí. Muốn góc nhà vệ sinh gọn, sạch và dễ lấy đồ hơn thì kiểu kệ này rất đáng tham khảo."
+    }
+  ]
+}
