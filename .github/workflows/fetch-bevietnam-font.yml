@@ -1,0 +1,24 @@
+name: Fetch Be Vietnam Pro Font
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/fetch-bevietnam-font.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download font
+        run: |
+          mkdir -p out
+          curl -L --fail --retry 3             https://github.com/bettergui/BeVietnamPro/raw/refs/heads/main/fonts/ttf/BeVietnamPro-Bold.ttf             -o out/BeVietnamPro-Bold.ttf
+          test -s out/BeVietnamPro-Bold.ttf
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bevietnampro-bold
+          path: out/BeVietnamPro-Bold.ttf
+          retention-days: 1
