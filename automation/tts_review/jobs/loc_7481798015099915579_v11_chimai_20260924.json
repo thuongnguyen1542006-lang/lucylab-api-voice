@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "loc_7481798015099915579_v11_chimai_20260924",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 0.95,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "review01",
+      "text": "Mùa hè thích uống thật lạnh thì chiếc bình này khá tiện. Bên trong có khay làm đá viên, cho nước vào rồi để ngăn đá. Khi đông, chỉ cần bóp nhẹ là đá rơi xuống phần chứa bên dưới. Sau đó rót nước ngọt trực tiếp vào, cắm ống hút là uống ngay. Hết đá thì thêm nước vào khay, để đông rồi dùng tiếp."
+    }
+  ]
+}
