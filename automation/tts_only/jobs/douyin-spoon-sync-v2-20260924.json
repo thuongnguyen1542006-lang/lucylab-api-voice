@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 4,
+  "stage": "timing",
+  "jobId": "douyin-spoon-sync-v2-20260924",
+  "voiceAlias": "co-nhan",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {"sceneId":"u01","text":"Chiếc muỗng có năm công dụng."},
+    {"sceneId":"u02","text":"Thiết kế đúng là quá thông minh."},
+    {"sceneId":"u03","text":"Mỗi lỗ đều có công dụng riêng."},
+    {"sceneId":"u04","text":"Không chỉ dùng để vớt thức ăn."},
+    {"sceneId":"u05","text":"Đầu tiên là một dụng cụ nghiền."},
+    {"sceneId":"u06","text":"Nghiền tỏi gừng cực kỳ tiện."},
+    {"sceneId":"u07","text":"Thành phẩm ra rất mịn và đều."},
+    {"sceneId":"u08","text":"Phần cong dùng nghiền khoai chuối."},
+    {"sceneId":"u09","text":"Nghiền xong thao tác rất gọn."},
+    {"sceneId":"u10","text":"Nó còn tách lòng trắng trứng."},
+    {"sceneId":"u11","text":"Làm bánh cũng tiện hơn nhiều."},
+    {"sceneId":"u12","text":"Trên cán có sẵn chỗ treo."},
+    {"sceneId":"u13","text":"Còn mở được cả nắp chai."},
+    {"sceneId":"u14","text":"Làm từ thép không gỉ 304."},
+    {"sceneId":"u15","text":"Cầm lên rất chắc và đầm tay."},
+    {"sceneId":"u16","text":"Muỗng dày dùng cực kỳ chắc chắn."},
+    {"sceneId":"u17","text":"Đập óc chó cũng vẫn ổn."}
+  ]
+}
