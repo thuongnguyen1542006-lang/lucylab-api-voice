@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_v12_20260924_2317_kitchen_tools_v1",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "cc9301e100624e95d07c360b10570c177f57e436c11df6fa24eddbfd702396fa",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Bộ dụng cụ bếp này nhìn gọn mà làm được khá nhiều việc. Các món cắm quanh giá xoay, lấy nhanh và cất lại ngăn nắp. Có cây đánh trứng, rây lọc, dụng cụ bào, gọt rau củ và mở nắp chai. Tay cầm đồng bộ, dựng đứng nên không chiếm nhiều mặt bàn. Từ gọt khoai, cà rốt, lọc bọt, đánh trứng đến mở chai đều có sẵn món phù hợp. Một bộ nhỏ gọn cho căn bếp muốn tiện dụng và dễ sắp xếp."
+    }
+  ]
+}
