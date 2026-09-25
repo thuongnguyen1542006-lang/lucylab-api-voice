@@ -1,0 +1,22 @@
+name: TEMP Fetch Be Vietnam Pro Bold
+on:
+  push:
+    paths:
+      - ".github/workflows/temp-fetch-be-vietnam-pro.yml"
+  workflow_dispatch:
+jobs:
+  fetch-font:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch official font
+        run: |
+          set -e
+          mkdir -p out
+          curl -L --fail --retry 3 -o out/BeVietnamPro-Bold.ttf https://raw.githubusercontent.com/google/fonts/main/ofl/bevietnampro/BeVietnamPro-Bold.ttf
+          file out/BeVietnamPro-Bold.ttf
+      - name: Upload font artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: temp-be-vietnam-pro-bold
+          path: out/BeVietnamPro-Bold.ttf
+          retention-days: 1
