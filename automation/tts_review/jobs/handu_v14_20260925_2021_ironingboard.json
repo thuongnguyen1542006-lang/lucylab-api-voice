@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_v14_20260925_2021_ironingboard",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Mình mới biết dùng bàn là hơi nước có món này tiện đến vậy. Chỉ cần luồn tấm đỡ vào sau quần áo, có điểm tựa nên là nhanh và phẳng hơn. Bề mặt chịu nhiệt giúp cầm phía sau mà không lo nóng tay. Những chỗ khó như cổ áo, tay áo, gấu áo hay góc nhỏ cũng xử lý dễ hơn. Tấm đỡ gọn, dùng xong cất cũng tiện. Ai hay là đồ treo thì món này rất đáng thử."
+    }
+  ]
+}
