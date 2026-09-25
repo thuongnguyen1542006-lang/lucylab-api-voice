@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_v13_20260925_d33_0915_v3",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Video này có hai món đồ gia dụng khá tiện. Đầu tiên là nồi chiên không dầu dạng lật. Bình thường, bạn mở giỏ phía trước để cho thực phẩm vào và dùng như nồi chiên. Khi xoay phần thân lên, thiết bị lại dùng như một nồi điện. Trong video có thể nấu mì, ăn lẩu, chiên trứng hay xào những món đơn giản. Khi muốn quay lại chế độ chiên, chỉ cần lật máy xuống và cho đồ ăn vào khay. Món thứ hai là máy lấy nước nóng tự động, đặt trực tiếp lên bình nước lớn. Máy có năm chế độ lấy nước để lựa chọn bằng nút bấm phía trên. Phía dưới có đế đặt cốc riêng, khá gọn khi dùng hằng ngày."
+    }
+  ]
+}
