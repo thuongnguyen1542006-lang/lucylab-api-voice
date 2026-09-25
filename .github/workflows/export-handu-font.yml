@@ -1,0 +1,21 @@
+name: Export HANDU Font
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/export-handu-font.yml']
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Be Vietnam Pro Bold
+        run: |
+          mkdir -p out
+          curl -L --fail https://raw.githubusercontent.com/bettergui/BeVietnamPro/main/fonts/ttf/BeVietnamPro-Bold.ttf -o out/BeVietnamPro-Bold.ttf
+          fc-scan out/BeVietnamPro-Bold.ttf | head -20
+      - uses: actions/upload-artifact@v4
+        with:
+          name: handu-font
+          path: out/BeVietnamPro-Bold.ttf
+          retention-days: 1
