@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_v14_f82051b6_20260926_brush",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Đừng thấy chiếc bàn chải này nhỏ mà xem thường. Trong đồ vệ sinh nhà mình, món này dùng tiện nhất. Đầu bàn chải vát tam giác, hơi cong nên len sát góc chết, mép chậu và những khe bàn chải thường khó chạm tới. Lông bàn chải khá cứng, chà mạnh nên cặn bẩn ra nhanh. Những rãnh nhỏ trên đồ bếp hay cặn ở vòi sen cũng xử lý gọn. Chà vài lượt là sạch thấy rõ. Dùng xong có thể treo lên, dựng đứng hoặc gập chân làm giá cho miếng rửa bát. Nhỏ gọn mà đa năng, mua hai chiếc để bếp và nhà tắm là hợp lý luôn."
+    }
+  ]
+}
