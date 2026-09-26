@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_v14_mE0ducm_20260926",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Nếu hay xào nấu mà dầu bắn đầy bếp thì chiếc nắp chống bắn này khá tiện. Phần vành lớn che quanh miệng chảo, còn khoảng mở ở giữa giúp mình vẫn cho nguyên liệu vào và đảo thức ăn bình thường. Khi cần đậy kín hơn chỉ việc đặt phần nắp nhỏ vào giữa, hơi nóng vẫn được giữ lại mà khu vực xung quanh đỡ bị bắn dầu. Lúc nấu xong có thể nhấc nắp ra, treo gọn lên móc nên không chiếm nhiều chỗ. Điểm mình thích nhất là mặt bếp và tường phía sau sạch hơn, đỡ mất công lau sau mỗi bữa. Với nhà thường xuyên chiên xào thì món này khá thực dụng."
+    }
+  ]
+}
