@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_36304611193",
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "scenes": [
+    {
+      "sceneId": "full",
+      "text": "Nhà ai hay để gừng, tỏi, ớt hoặc đồ lặt vặt quanh bếp thì xem chiếc kệ này nhé. Kệ dùng giác hút nên lắp lên tường nhanh, không cần khoan và không phải dán keo. Các giỏ xếp theo chiều dọc, tận dụng khoảng tường trống mà vẫn lấy đồ tiện. Mình có thể tách từng giỏ ra để vệ sinh hoặc đổi vị trí theo nhu cầu. Đặt trong bếp thì để gia vị, dụng cụ nhỏ; trong nhà tắm có thể dùng cho đồ vệ sinh cá nhân. Thiết kế gọn, thoáng và giúp mặt bàn đỡ bừa hơn. Nếu nhà ít chỗ chứa đồ, kiểu kệ treo này khá đáng tham khảo."
+    }
+  ]
+}
