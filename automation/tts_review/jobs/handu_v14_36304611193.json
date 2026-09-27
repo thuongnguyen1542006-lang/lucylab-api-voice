@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_v14_36304611193",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full",
+      "text": "Gừng, tỏi, ớt để lộn xộn trên bàn vừa vướng vừa dễ ẩm. Chiếc kệ hút chân không này giúp gom đồ gọn hơn. Chỉ cần áp cốc hút lên bề mặt phẳng rồi xoay khóa, kệ bám chắc, không cần khoan tường hay dùng keo. Ba giỏ tách riêng để chia loại, cần món nào lấy món đó. Đáy giỏ có khe thoáng, hạn chế bí hơi. Mỗi giỏ còn xoay được 180 độ nên thao tác thuận tay. Ngoài bếp, lắp cạnh lavabo để cất bàn chải, mỹ phẩm hoặc đồ dùng nhỏ. Khi muốn đổi chỗ chỉ cần tháo ra rồi lắp lại, vừa linh hoạt vừa giữ bề mặt sạch."
+    }
+  ]
+}
