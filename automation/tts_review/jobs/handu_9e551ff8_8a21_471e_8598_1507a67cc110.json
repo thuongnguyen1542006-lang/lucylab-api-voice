@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_9e551ff8_8a21_471e_8598_1507a67cc110",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Ba món đồ dùng trong nhà vừa tiện vừa gọn. Đầu tiên là kẹp treo chổi lau nhà. Nếu chổi và cây lau dựng dưới sàn, gắn kẹp này lên tường rất gọn. Nó giữ cán chổi lơ lửng, có móc treo dụng cụ nhỏ, dễ lấy. Món thứ hai là giá khăn kéo ra được. Kéo ra để đặt quần áo, khăn tắm. Phía dưới có móc treo bông tắm. Dùng xong đẩy vào, không chiếm chỗ. Cuối cùng là kẹp khăn tự thu dây. Lau tay xong thả ra, dây tự kéo khăn về chỗ cũ. Ba món đều đáng tham khảo."
+    }
+  ]
+}
