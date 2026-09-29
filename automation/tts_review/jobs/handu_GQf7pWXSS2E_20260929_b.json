@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_GQf7pWXSS2E_20260929_b",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Chiếc nồi cơm mini Supor này nhỏ hơn cả bát tô, dùng hằng ngày rất tiện. Bảng điều khiển đơn giản, không có nút bấm rắc rối. Một người đong một cốc gạo, hai người hai cốc, nấu vừa đủ nên không lo dư cơm. Bên trong có vạch nước, người mới tập nấu cơm cũng dễ làm. Mình thích nhất chức năng hẹn giờ hai mươi bốn tiếng. Tối chuẩn bị gạo trước, sáng dậy đã có cháo nóng. Ngoài nấu cơm, nồi còn hợp để nấu cháo, hầm canh hay làm món ngọt. Để ở nhà hoặc ký túc xá đều gọn. Lòng nồi bằng gốm ít bám dính, tấm nắp tháo ra rửa được. Quai xách cũng tiện khi di chuyển."
+    }
+  ]
+}
