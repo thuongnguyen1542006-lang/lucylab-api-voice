@@ -1,0 +1,23 @@
+{
+  "spec_version": "1.4",
+  "enabled": false,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "spreadsheet_id": "1oce71iKw2qrUf3Nh_whw6OtVuVecgadgK1QDZJRl2vg",
+  "sheet_tab": "Hàng đợi",
+  "sheet_range": "'Hàng đợi'!A:H",
+  "first_data_row": 3,
+  "max_links_per_run": 1,
+  "max_reels_per_day": 3,
+  "publication_hours": [9, 13, 19],
+  "minimum_schedule_buffer_minutes": 60,
+  "metricool": {
+    "brand_name": "Handu Home Offical",
+    "blog_id": 7104509,
+    "user_id": 5490372,
+    "facebook_page_id": "107888958288954"
+  },
+  "voice_id": "cLZiqtzLcKYqwYrWJemAJK",
+  "font": "Be Vietnam Pro Bold",
+  "required_release_gate": "M12 PASS",
+  "planned_scan_cron_utc": "17 * * * *"
+}

@@ -1,0 +1,43 @@
+name: HANDU Auto Migration Preflight
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'automation/handu_auto/**'
+      - '.github/workflows/handu-auto-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: handu-auto-migration-preflight
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install connection check dependencies
+        run: python -m pip install 'requests==2.32.5' 'google-auth==2.40.3'
+      - name: Check secrets and external read access
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          METRICOOL_API_TOKEN: ${{ secrets.METRICOOL_API_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LUCYLAB_API_KEY: ${{ secrets.LUCYLAB_API_KEY }}
+        run: python automation/handu_auto/preflight.py
+      - name: Save migration report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handu-auto-preflight-${{ github.run_id }}
+          path: handu_preflight_output/
+          retention-days: 30
+          if-no-files-found: warn
