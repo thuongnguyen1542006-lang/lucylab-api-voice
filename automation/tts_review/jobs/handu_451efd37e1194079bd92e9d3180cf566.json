@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_451efd37e1194079bd92e9d3180cf566",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "6b184277c797182069d890d171f9ac49556c00f5",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Nhà bếp nhỏ nhưng biết sắp xếp thì vẫn gọn gàng và dễ dùng hơn. Video này gợi ý những món đồ giúp tận dụng khoảng trống trong bếp. Từ khay úp đĩa, giá để hộp và kệ chia ngăn, đến hộp đựng gia vị, giá treo dụng cụ và khay cạnh bồn rửa. Mỗi món tạo ra một vị trí riêng để đồ dùng dễ nhìn, dễ lấy và không phải chất chồng lên nhau. Khi cần nấu ăn, mình chỉ việc lấy đúng món; dùng xong cũng cất lại ngay. Nếu bếp nhà bạn thường xuyên bừa bộn, hãy bắt đầu từ một góc nhỏ, chọn đúng dụng cụ và sắp xếp theo thói quen sử dụng."
+    }
+  ]
+}
