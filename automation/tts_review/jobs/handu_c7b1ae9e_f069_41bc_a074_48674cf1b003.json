@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_c7b1ae9e_f069_41bc_a074_48674cf1b003",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Chiếc nồi chiên này có khoang trong suốt, nên mình dễ dàng nhìn món ăn thay đổi trong suốt quá trình nấu. Chỉ cần mở nắp, xếp thực phẩm lên khay rồi chọn chế độ cảm ứng. Khi món chín, nhấc nắp là lấy ra ngay. Khay và đế tháo rời, rửa trực tiếp dưới vòi nước cũng rất tiện."
+    }
+  ]
+}
