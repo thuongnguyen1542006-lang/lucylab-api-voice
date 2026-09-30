@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_fe5964b9_4382_40a8_9d3b_bb1c64da7670",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Nhìn như một rô bốt, nhưng đây là thùng rác cảm ứng. Chỉ cần đưa tay lại gần, nắp tự mở, không phải chạm. Bỏ rác xong, khoảng hai mươi giây sau nắp sẽ tự động đóng lại. Kiểu dáng ngộ nghĩnh còn khiến các bé thích thú bỏ rác đúng chỗ. Cần dùng liên tục thì bấm nút bên hông, nắp có thể giữ mở trong năm phút, rất tiện lúc dọn dẹp. Bên dưới có bánh xe, nên khi quét hay lau sàn, mình chỉ cần đẩy nhẹ sang bên, không phải cúi xuống nhấc cả thùng lên. Dọn nhà cũng nhàn hơn nhiều. Thân trắng phối đen trông gọn gàng, đặt trong phòng khách như đồ trang trí. Cổng sạc nằm phía sau."
+    }
+  ]
+}
