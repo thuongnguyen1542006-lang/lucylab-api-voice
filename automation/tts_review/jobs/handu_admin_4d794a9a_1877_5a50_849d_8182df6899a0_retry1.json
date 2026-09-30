@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_admin_4d794a9a_1877_5a50_849d_8182df6899a0_retry1",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "71d5f96948746f61b22a81d3a22c3baef61e54929d3940e820089db7c3c3ccc8",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Đây là chiếc đèn cảm ứng nhỏ gọn, phù hợp lắp ở hành lang, cửa ra vào hoặc những góc thiếu sáng trong nhà. Khi có người đi qua, đèn tự động bật lên, giúp mình nhìn rõ mà không cần lần tìm công tắc. Sau khi không còn chuyển động, đèn sẽ tự tắt, vừa tiện vừa tiết kiệm điện. Thiết kế dạng tròn, ánh sáng dịu mắt và không chiếm nhiều diện tích. Phần đế có thể gắn lên tường, còn thân đèn tháo ra khá nhanh để sạc hoặc di chuyển sang vị trí khác. Hộp sản phẩm ghi công suất một watt, phù hợp dùng làm đèn dẫn lối ban đêm. Nếu nhà có người lớn tuổi, trẻ nhỏ hoặc thường xuyên đi lại giữa các phòng, mẫu đèn này là một món đồ nhỏ nhưng rất hữu ích."
+    }
+  ]
+}
