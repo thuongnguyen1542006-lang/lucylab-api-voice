@@ -5,7 +5,7 @@
   "voiceAlias": "chi-mai",
   "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
   "voiceSpeed": 1,
-  "bridgeSha256": "6b184277c797182069d890d171f9ac49556c00f5",
+  "bridgeSha256": "71d5f96948746f61b22a81d3a22c3baef61e54929d3940e820089db7c3c3ccc8",
   "scenes": [
     {
       "sceneId": "full_review",
