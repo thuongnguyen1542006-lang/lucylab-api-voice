@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_74529ec1_9dea_4012_addb_9acb500f7acb",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Bếp nhỏ mà mặt bàn lúc nào cũng kín đồ thì chiếc kệ gập này rất tiện. Khi cần, bạn chỉ việc kéo kệ xuống để bày rau, thịt, bát đĩa và chuẩn bị nguyên liệu ngay trước mặt. Mọi thứ được chia tầng, lấy món nào cũng nhanh, khu vực thái và nấu không còn chật chội. Xong việc, đẩy nhẹ là kệ gập sát vào tường, trả lại mặt bếp thông thoáng. Phần thanh phía dưới còn có thể giữ thớt, không chiếm thêm diện tích. Kết cấu dạng nan giúp lau rửa; các thanh có thể tháo ra để vệ sinh. Bạn cũng có thể tận dụng kệ để úp cốc hoặc đặt đồ rửa cho ráo nước. Kệ được cố định lên tường bằng vít nở, phù hợp với góc bếp cần thêm chỗ chứa nhưng vẫn muốn giữ lối thao tác gọn. Một giải pháp nhỏ, nhưng giúp việc sơ chế, nấu ăn và dọn dẹp liền mạch hơn mỗi ngày."
+    }
+  ]
+}
