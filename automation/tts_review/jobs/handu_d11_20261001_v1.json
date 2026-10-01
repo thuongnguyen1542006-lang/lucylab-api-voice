@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_d11_20261001_v1",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Đây là những món đồ bếp mình thấy xuất hiện nhiều nhất trong video này. Đầu tiên là chiếc máy rửa chén để bàn. Thân máy gọn, đặt ngay cạnh bồn rửa và có thể xử lý bát, đĩa, ly cùng các vật dụng nhỏ. Video cho thấy nước được cấp trực tiếp vào máy, sau đó đồ dùng được xếp vào khoang rửa. Với nhà ít người hoặc căn bếp nhỏ, kiểu máy này giúp gom việc rửa chén vào một lượt thay vì đứng bên bồn rửa quá lâu. Phần tiếp theo cho thấy nhiều loại vật dụng bếp có kích thước khác nhau, từ thìa, đũa, ly cho đến khay và hộp đựng. Những cảnh rửa sau khi chế biến thức ăn cũng cho thấy máy phù hợp để xử lý phần chén đĩa dùng hằng ngày, nhất là sau các bữa có nhiều dầu mỡ hoặc nhiều dụng cụ trong gian bếp hằng ngày. Trong video còn có những thiết bị phục vụ nấu nướng trực tiếp. Có món được dùng để nấu canh, món khác hỗ trợ làm nóng hoặc chế biến thức ăn theo từng mẻ nhỏ. Nhờ vậy, thay vì bày quá nhiều nồi chảo trên bếp, người dùng có thể chia các công đoạn theo thiết bị phù hợp. Cách dùng này đặc biệt tiện khi cần chuẩn bị bữa ăn nhanh, nhưng vẫn muốn giữ bàn bếp gọn gàng. Một điểm đáng chú ý là các cảnh làm đồ ăn nóng, nấu món nước và xử lý thực phẩm được quay xen kẽ với bước dọn rửa. Điều đó cho thấy giá trị của nhóm thiết bị này không chỉ nằm ở một chức năng riêng lẻ, mà ở việc tạo thành một quy trình bếp dễ chịu hơn: chuẩn bị, nấu, ăn rồi dọn dẹp. Những vật dụng nhỏ như thìa, đũa, hộp và khay cũng không bị bỏ quên sau bữa ăn. Với các gia đình ít người, người sống một mình hoặc ở căn hộ có bếp nhỏ, lựa chọn thiết bị gọn và dùng đúng nhu cầu thường quan trọng hơn việc mua thật nhiều. Video này gợi ý một cách sắp xếp khá thực tế: ưu tiên thiết bị hỗ trợ các việc lặp lại mỗi ngày, dùng xong dễ vệ sinh và không chiếm quá nhiều diện tích. Nếu bạn đang muốn giảm thời gian dọn bếp sau khi nấu ăn, đây là những kiểu sản phẩm đáng cân nhắc theo đúng nhu cầu của gia đình mình, nhất là cho bữa cơm hằng ngày."
+    }
+  ]
+}
