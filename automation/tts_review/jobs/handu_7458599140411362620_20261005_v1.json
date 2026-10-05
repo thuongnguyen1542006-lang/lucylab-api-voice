@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_7458599140411362620_20261005_v1",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Chiếc đầu lọc này gắn vào vòi bếp bằng một vòng siết nhỏ. Bên trong là lõi lọc có thể tháo ra để vệ sinh. Đầu vòi xoay linh hoạt, đưa dòng nước tới đúng chỗ khi rửa bát, rửa rau. Muốn xả vào góc bồn, bạn chỉ cần nghiêng đầu phun. Tia nước gom lại nên bớt bắn ra quanh bồn. Xem kỹ kích thước đầu vòi trước khi mua để lắp vừa ở nhà."
+    }
+  ]
+}
