@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_7144662970956631309_20261006_v1",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1.03,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Đi huấn luyện quân sự, có một món mình thấy cực kỳ hữu ích. Cái này mình gọi vui là cây massage bảy viên ngọc rồng. Hồi đó nó đúng kiểu cứu đôi chân mình. Tập cả ngày, chân mỏi nhừ và căng đau. Tối trước khi ngủ chỉ cần lăn qua lăn lại, ấn nhẹ chỗ đau là cảm giác ê mỏi đỡ gần một nửa. Giá chỉ khoảng sáu, bảy tệ, lại có dây điều chỉnh nên đeo tay rất tiện. Ban đầu mình mua nó để thoa sữa dưỡng thể, nghĩ khỏi phải bôi bằng tay cho nhớp. Nhưng không ổn, kem dễ mắc vào các khe, vừa bẩn vừa phải moi từng chỗ ra rửa. Thế nên cứ để nó làm đúng việc của nó: massage. Sau buổi tập, chân đau hay căng cơ ở đâu thì cứ lăn ở đó. Với mình, nó giúp giảm ít nhất khoảng năm mươi phần trăm cảm giác ê mỏi. Hồi quân sự mà không có món này chắc mình chịu không nổi. Chân đau đến mức tưởng khó đi, lăn xong thì dễ chịu hẳn. Nếu sắp đi huấn luyện, mình thấy món này rất đáng mang theo."
+    }
+  ]
+}
