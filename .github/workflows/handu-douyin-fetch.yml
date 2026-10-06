@@ -65,7 +65,16 @@ jobs:
           set -e
           if [ $code -ne 0 ] || ! ls handu_fetch_output/source.* >/dev/null 2>&1; then
             echo "short-link download failed; trying canonical video URL"
-            yt-dlp --no-playlist --merge-output-format mp4 --retries 5 --fragment-retries 5               --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36"               -o "handu_fetch_output/source.%(ext)s" "https://www.douyin.com/video/$VID"
+            set +e
+            yt-dlp --no-playlist --merge-output-format mp4 --retries 5 --fragment-retries 5 \
+              --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/154 Safari/537.36" \
+              -o "handu_fetch_output/source.%(ext)s" "https://www.douyin.com/video/$VID"
+            code2=$?
+            set -e
+            if [ $code2 -ne 0 ] || ! ls handu_fetch_output/source.* >/dev/null 2>&1; then
+              echo "canonical download failed; trying IES router fallback"
+              python automation/handu_fetch/fetch_ies.py "$VID"
+            fi
           fi
           src=$(ls handu_fetch_output/source.* | head -1)
           if [ "$src" != "handu_fetch_output/source.mp4" ]; then
