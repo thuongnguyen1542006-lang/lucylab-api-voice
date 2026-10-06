@@ -20,6 +20,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -38,10 +40,14 @@ jobs:
           from pathlib import Path
           p=os.environ.get("REQUEST_PATH","").strip()
           if not p:
-              paths=subprocess.check_output(["git","diff-tree","--no-commit-id","--name-only","--diff-filter=A","-r","HEAD"]).decode().splitlines()
+              paths=subprocess.check_output(["git","diff-tree","--no-commit-id","--name-only","--diff-filter=AM","-r","HEAD"]).decode().splitlines()
               paths=[x for x in paths if x.startswith("automation/handu_fetch/jobs/") and x.endswith(".json")]
-              assert paths, "No fetch job added"
-              p=paths[0]
+              if paths:
+                  p=paths[0]
+              else:
+                  jobs=sorted(Path("automation/handu_fetch/jobs").glob("*.json"), key=lambda x:x.stat().st_mtime, reverse=True)
+                  assert jobs, "No fetch job found"
+                  p=str(jobs[0])
           j=json.loads(Path(p).read_text())
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write("url="+j["url"]+"\n")
