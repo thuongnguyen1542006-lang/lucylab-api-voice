@@ -25,7 +25,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install requests faster-whisper pycryptodome
-          python -m playwright install --with-deps chromium
       - name: Download and transcribe Douyin
         env:
           DOUYIN_URL: https://v.douyin.com/YA0Q_ckY824/
