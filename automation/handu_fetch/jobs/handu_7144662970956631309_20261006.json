@@ -2,5 +2,6 @@
   "url": "https://v.douyin.com/in0JSnJSDlg/",
   "video_id": "7144662970956631309",
   "requested_by": "chat",
-  "purpose": "HANDU V1.4 localization source fetch"
+  "purpose": "HANDU V1.4 localization source fetch",
+  "retry": 1
 }
