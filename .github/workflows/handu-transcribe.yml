@@ -27,7 +27,7 @@ jobs:
         id: job
         run: |
           python - <<'PY'
-          import json, subprocess
+          import json, subprocess, os
           from pathlib import Path
           paths=subprocess.check_output(["git","diff-tree","--no-commit-id","--name-only","--diff-filter=AM","-r","HEAD"]).decode().splitlines()
           paths=[x for x in paths if x.startswith("automation/handu_transcribe/jobs/") and x.endswith(".json")]
