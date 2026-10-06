@@ -3,5 +3,6 @@
   "video_id": "7144662970956631309",
   "requested_by": "chat",
   "purpose": "HANDU V1.4 localization source fetch",
-  "retry": 1
+  "retry": 2,
+  "fetcher": "ies_fallback_v2"
 }
