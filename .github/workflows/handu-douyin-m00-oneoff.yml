@@ -1,0 +1,40 @@
+name: HANDU Douyin M00 One-Off
+
+on:
+  push:
+    branches: [handu-douyin-ya0q-20261006]
+    paths:
+      - '.github/workflows/handu-douyin-m00-oneoff.yml'
+      - 'automation/douyin_m00/**'
+
+permissions:
+  contents: read
+
+jobs:
+  m00:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install system tools
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install playwright requests faster-whisper
+          python -m playwright install --with-deps chromium
+      - name: Download and transcribe Douyin
+        env:
+          DOUYIN_URL: https://v.douyin.com/YA0Q_ckY824/
+        run: python automation/douyin_m00/run.py
+      - name: Upload M00
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handu-m00-ya0q-${{ github.run_id }}
+          path: handu_m00/
+          retention-days: 7
+          if-no-files-found: warn
