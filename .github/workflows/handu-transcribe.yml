@@ -33,7 +33,7 @@ jobs:
           paths=[x for x in paths if x.startswith("automation/handu_transcribe/jobs/") and x.endswith(".json")]
           assert paths, "No transcribe job"
           j=json.loads(Path(paths[0]).read_text())
-          with open("$GITHUB_OUTPUT","a") as f:
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write("url="+j["url"]+"\n")
               f.write("video_id="+str(j["video_id"])+"\n")
           PY
