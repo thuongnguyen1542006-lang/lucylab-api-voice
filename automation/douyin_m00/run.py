@@ -48,7 +48,7 @@ async def acquire():
         aweme_id = m.group(1) if m else None
         if not aweme_id:
             html = await page.content()
-            ids = re.findall(r'(?:"aweme_id"|awemeId)["':=\\s]+(\d{15,22})', html)
+            ids = re.findall(r'(?:aweme_id|awemeId).{0,40}?(\\d{15,22})', html)
             if ids:
                 aweme_id = ids[0]
         meta["aweme_id"] = aweme_id
