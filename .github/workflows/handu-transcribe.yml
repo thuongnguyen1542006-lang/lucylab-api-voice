@@ -36,6 +36,7 @@ jobs:
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write("url="+j["url"]+"\n")
               f.write("video_id="+str(j["video_id"])+"\n")
+              f.write("artifact_id="+str(j.get("artifact_id",""))+"\n")
           PY
       - name: Fetch exact source
         env:
