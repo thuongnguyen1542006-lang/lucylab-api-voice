@@ -19,3 +19,5 @@ jobs:
           name: handu-font
           path: out/BeVietnamPro-Bold.ttf
           retention-days: 1
+
+# refreshed for HANDU render 2026-10-06
