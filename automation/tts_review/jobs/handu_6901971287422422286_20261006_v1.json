@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_6901971287422422286_20261006_v1",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1.0,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Đeo miếng massage vào hai tay. Động tác một: xoa bụng theo vòng tròn, di chuyển dần xuống dưới. Động tác hai: đặt tay ở hai bên bụng, xoa đều theo hướng xuống. Động tác ba: xoa qua lại trái và phải. Thực hiện nhẹ nhàng, đều tay và vừa lực."
+    }
+  ]
+}
