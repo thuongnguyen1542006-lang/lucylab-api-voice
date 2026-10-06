@@ -40,10 +40,19 @@ jobs:
       - name: Fetch exact source
         env:
           SRC_URL: ${{ steps.job.outputs.url }}
+          ARTIFACT_ID: ${{ steps.job.outputs.artifact_id }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p handu_transcribe_output
-          python automation/handu_fetch/fetch_public_api.py "$SRC_URL"
-          cp handu_fetch_output/source.mp4 handu_transcribe_output/source.mp4
+          if [ -n "$ARTIFACT_ID" ]; then
+            curl -L --fail -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$ARTIFACT_ID/zip" -o /tmp/source_artifact.zip
+            unzip -o /tmp/source_artifact.zip -d /tmp/source_artifact
+            cp /tmp/source_artifact/source.mp4 handu_transcribe_output/source.mp4
+          else
+            python automation/handu_fetch/fetch_public_api.py "$SRC_URL"
+            cp handu_fetch_output/source.mp4 handu_transcribe_output/source.mp4
+          fi
       - name: Transcribe Chinese
         run: python automation/handu_transcribe/transcribe.py handu_transcribe_output/source.mp4 handu_transcribe_output
       - name: Upload transcription
