@@ -1,4 +1,4 @@
-import json, re, sys, subprocess
+import json, re, sys, subprocess, os
 from pathlib import Path
 import requests
 
@@ -8,6 +8,102 @@ OUT.mkdir(exist_ok=True)
 UA = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Mobile Safari/537.36"
 share = f"https://www.iesdouyin.com/share/video/{VID}"
 headers = {"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.7", "Referer":"https://www.douyin.com/"}
+
+
+# Public no-key parser fallbacks for short links that Douyin blocks on datacenter IPs.
+SRC_URL = os.environ.get("SRC_URL", "").strip()
+PUBLIC_APIS = [
+    ("qsy", "https://qsy.aiwyuw.cn/api/short_videos.php"),
+    ("devtool", "https://www.devtool.top/api/douyin/parse"),
+    ("jxcxin", "https://apis.jxcxin.cn/api/douyin"),
+    ("mxin", "https://api.mxin.moe/api/v1/douyin"),
+]
+
+def _pick_media_url(obj):
+    preferred = []
+    fallback = []
+    def rec(x, path=""):
+        if isinstance(x, dict):
+            for k, v in x.items():
+                p = f"{path}.{k}" if path else str(k)
+                if isinstance(v, str) and v.startswith("http"):
+                    lk = k.lower()
+                    lp = p.lower()
+                    if any(t in lk for t in ("video", "play")) or any(t in lp for t in ("video.url", "video_url", "play_addr", "playurl")):
+                        preferred.append(v)
+                    elif lk == "url" or lp.endswith(".url"):
+                        fallback.append(v)
+                elif isinstance(v, (dict, list)):
+                    rec(v, p)
+        elif isinstance(x, list):
+            for i, v in enumerate(x):
+                rec(v, f"{path}[{i}]")
+    rec(obj)
+    urls=[]
+    for u in preferred + fallback:
+        u=u.replace("\\/","/")
+        if u not in urls:
+            urls.append(u)
+    return urls
+
+def _download_candidate(u, referer):
+    rr=requests.get(
+        u,
+        headers={"User-Agent":UA,"Referer":referer or "https://www.douyin.com/"},
+        stream=True,
+        allow_redirects=True,
+        timeout=120,
+    )
+    if rr.status_code != 200:
+        return False, f"http_{rr.status_code}"
+    tmp=OUT/"public_candidate.bin"
+    with open(tmp,"wb") as f:
+        for ch in rr.iter_content(1024*1024):
+            if ch: f.write(ch)
+    if not tmp.exists() or tmp.stat().st_size < 100000:
+        sz=tmp.stat().st_size if tmp.exists() else 0
+        tmp.unlink(missing_ok=True)
+        return False, f"too_small_{sz}"
+    p=subprocess.run(
+        ["ffprobe","-v","error","-show_entries","format=duration:stream=codec_type,width,height,codec_name","-of","json",str(tmp)],
+        capture_output=True,text=True
+    )
+    if p.returncode!=0:
+        tmp.unlink(missing_ok=True)
+        return False, "ffprobe_failed"
+    pr=json.loads(p.stdout)
+    if not any(x.get("codec_type")=="video" for x in pr.get("streams",[])):
+        tmp.unlink(missing_ok=True)
+        return False, "no_video"
+    tmp.replace(OUT/"source.mp4")
+    (OUT/"ffprobe.json").write_text(json.dumps(pr,ensure_ascii=False,indent=2),encoding="utf-8")
+    (OUT/"source_url.txt").write_text(u,encoding="utf-8")
+    return True, "ok"
+
+public_diag=[]
+if SRC_URL:
+    for name, api in PUBLIC_APIS:
+        try:
+            pr=requests.get(api,params={"url":SRC_URL},headers={"User-Agent":UA},timeout=45)
+            entry={"name":name,"status":pr.status_code,"api":api,"final_url":pr.url,"text_prefix":pr.text[:500]}
+            public_diag.append(entry)
+            if pr.status_code != 200:
+                continue
+            try:
+                data=pr.json()
+            except Exception:
+                continue
+            (OUT/f"public_{name}.json").write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding="utf-8")
+            for media_url in _pick_media_url(data):
+                ok, why=_download_candidate(media_url, SRC_URL)
+                public_diag.append({"name":name,"media_url":media_url,"download":why})
+                if ok:
+                    (OUT/"public_fallback.json").write_text(json.dumps(public_diag,ensure_ascii=False,indent=2),encoding="utf-8")
+                    sys.exit(0)
+        except Exception as e:
+            public_diag.append({"name":name,"error":repr(e)})
+    (OUT/"public_fallback.json").write_text(json.dumps(public_diag,ensure_ascii=False,indent=2),encoding="utf-8")
+
 
 def extract_obj(s, start):
     depth=0; ins=False; esc=False
