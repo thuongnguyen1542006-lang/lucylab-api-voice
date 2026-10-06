@@ -1,0 +1,54 @@
+name: HANDU Chinese Transcribe
+
+on:
+  push:
+    branches: [main]
+    paths: ['automation/handu_transcribe/jobs/*.json']
+
+permissions:
+  contents: read
+
+jobs:
+  transcribe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install -U faster-whisper requests
+          sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Resolve job
+        id: job
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          paths=subprocess.check_output(["git","diff-tree","--no-commit-id","--name-only","--diff-filter=AM","-r","HEAD"]).decode().splitlines()
+          paths=[x for x in paths if x.startswith("automation/handu_transcribe/jobs/") and x.endswith(".json")]
+          assert paths, "No transcribe job"
+          j=json.loads(Path(paths[0]).read_text())
+          with open("$GITHUB_OUTPUT","a") as f:
+              f.write("url="+j["url"]+"\n")
+              f.write("video_id="+str(j["video_id"])+"\n")
+          PY
+      - name: Fetch exact source
+        env:
+          SRC_URL: ${{ steps.job.outputs.url }}
+        run: |
+          mkdir -p handu_transcribe_output
+          python automation/handu_fetch/fetch_public_api.py "$SRC_URL"
+          cp handu_fetch_output/source.mp4 handu_transcribe_output/source.mp4
+      - name: Transcribe Chinese
+        run: python automation/handu_transcribe/transcribe.py handu_transcribe_output/source.mp4 handu_transcribe_output
+      - name: Upload transcription
+        uses: actions/upload-artifact@v4
+        with:
+          name: handu-transcribe-${{ github.run_id }}
+          path: handu_transcribe_output/
+          retention-days: 7
