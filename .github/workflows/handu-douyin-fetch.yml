@@ -78,8 +78,8 @@ jobs:
               code3=$?
               set -e
               if [ $code3 -ne 0 ] || [ ! -s handu_fetch_output/source.mp4 ]; then
-                echo "IES/API fallback failed; trying public DTK demo parser"
-                python automation/handu_fetch/fetch_demo.py "$SRC_URL"
+                echo "IES/API fallback failed; trying public parser endpoint"
+                python automation/handu_fetch/fetch_public_api.py "$SRC_URL"
               fi
             fi
           fi
