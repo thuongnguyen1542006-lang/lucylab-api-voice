@@ -38,3 +38,5 @@ jobs:
           path: handu_m00/
           retention-days: 7
           if-no-files-found: warn
+
+# retry after script syntax fix
