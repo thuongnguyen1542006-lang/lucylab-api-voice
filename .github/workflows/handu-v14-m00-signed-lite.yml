@@ -1,0 +1,81 @@
+name: HANDU V1.4 M00 Signed Lite
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/handu-v14-m00-signed-lite.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install parser deps
+        run: |
+          python -m pip install -q requests gmssl
+          mkdir -p /tmp/dp
+          curl -fsSL https://raw.githubusercontent.com/DLWangSan/douyin_parse/master/douyin_video_parser.py -o /tmp/dp/douyin_video_parser.py
+          curl -fsSL https://raw.githubusercontent.com/DLWangSan/douyin_parse/master/abogus.py -o /tmp/dp/abogus.py
+          curl -fsSL https://raw.githubusercontent.com/DLWangSan/douyin_parse/master/xbogus.py -o /tmp/dp/xbogus.py
+      - name: Parse and download
+        env:
+          DOUYIN_URL: https://v.douyin.com/in0JSnJSDlg/
+        run: |
+          mkdir -p handu_m00
+          PYTHONPATH=/tmp/dp python - <<'PY'
+          import json, os, requests
+          from pathlib import Path
+          from douyin_video_parser import DouyinVideoParser
+          url=os.environ["DOUYIN_URL"]
+          p=DouyinVideoParser()
+          vid=p.get_video_id(url)
+          Path("handu_m00/video_id.txt").write_text(str(vid),encoding="utf-8")
+          info=p.parse_video(url)
+          Path("handu_m00/parser_result.json").write_text(json.dumps(info,ensure_ascii=False,indent=2),encoding="utf-8")
+          if not info:
+              raise SystemExit("parser returned no video")
+          candidates=[]
+          if info.get("nwm_url"): candidates.append(info["nwm_url"])
+          for q in info.get("qualities") or []:
+              u=q.get("url")
+              if u and u not in candidates: candidates.append(u)
+          Path("handu_m00/candidates.json").write_text(json.dumps(candidates,ensure_ascii=False,indent=2),encoding="utf-8")
+          h={"User-Agent":p.user_agent,"Referer":f"https://www.douyin.com/video/{vid}"}
+          errors=[]
+          for i,u in enumerate(candidates):
+              try:
+                  r=requests.get(u,headers=h,stream=True,timeout=180,allow_redirects=True)
+                  ct=r.headers.get("content-type","")
+                  if r.status_code!=200:
+                      errors.append({"i":i,"status":r.status_code,"ct":ct}); continue
+                  path=Path("handu_m00")/f"candidate_{i}.mp4"
+                  with path.open("wb") as f:
+                      for chunk in r.iter_content(1024*1024):
+                          if chunk: f.write(chunk)
+                  size=path.stat().st_size
+                  if size>200000:
+                      path.replace("handu_m00/source.mp4")
+                      break
+                  errors.append({"i":i,"status":r.status_code,"ct":ct,"size":size})
+              except Exception as e:
+                  errors.append({"i":i,"error":str(e)})
+          Path("handu_m00/download_errors.json").write_text(json.dumps(errors,ensure_ascii=False,indent=2),encoding="utf-8")
+          if not Path("handu_m00/source.mp4").exists():
+              raise SystemExit("download failed")
+          PY
+      - name: Upload
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handu-v14-m00-signed-lite-${{ github.run_id }}
+          path: handu_m00/
+          retention-days: 7
+          if-no-files-found: warn
