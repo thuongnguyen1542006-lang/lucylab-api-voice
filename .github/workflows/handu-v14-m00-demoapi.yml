@@ -1,0 +1,48 @@
+name: HANDU V1.4 M00 Demo API
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/handu-v14-m00-demoapi.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  parse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse with DTK v5 demo
+        env:
+          DOUYIN_URL: https://v.douyin.com/in0JSnJSDlg/
+        run: |
+          mkdir -p handu_m00
+          PASS=$(curl -fsS https://demo.douyin.wtf/api/v1/auth/demo | python -c 'import sys,json; print(json.load(sys.stdin)["data"]["password"])')
+          curl -fsS -c handu_m00/jar -o handu_m00/login.json             -X POST https://demo.douyin.wtf/api/v1/auth/login             -H 'content-type: application/json'             -d "{\"username\":\"demo\",\"password\":\"$PASS\"}"
+          python - <<'PY' > handu_m00/payload.json
+          import json, os
+          print(json.dumps({"url":os.environ["DOUYIN_URL"]},ensure_ascii=False))
+          PY
+          curl -sS -b handu_m00/jar -o handu_m00/parse_response.json -w '%{http_code}'             -X POST 'https://demo.douyin.wtf/api/v1/parse?wait=25'             -H 'content-type: application/json'             --data-binary @handu_m00/payload.json > handu_m00/http_code.txt
+          cat handu_m00/http_code.txt
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("handu_m00/parse_response.json")
+          try:
+              d=json.loads(p.read_text())
+              print(json.dumps(d,ensure_ascii=False)[:5000])
+          except Exception as e:
+              print("parse response decode error",e)
+          PY
+      - name: Upload
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handu-v14-m00-demoapi-${{ github.run_id }}
+          path: handu_m00/
+          retention-days: 7
+          if-no-files-found: warn
