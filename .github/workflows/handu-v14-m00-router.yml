@@ -31,7 +31,7 @@ jobs:
       - name: Download and transcribe Douyin
         env:
           DOUYIN_URL: https://v.douyin.com/in0JSnJSDlg/
-          AWEME_ID: 7144662970956631309
+          AWEME_ID: '7144662970956631309'
         run: python automation/douyin_m00_v14/run.py
       - name: Upload M00
         if: always()
