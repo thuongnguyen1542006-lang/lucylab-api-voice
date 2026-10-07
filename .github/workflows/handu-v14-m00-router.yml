@@ -1,0 +1,43 @@
+name: HANDU V1.4 M00 Router Fetch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/handu-v14-m00-router.yml'
+      - 'automation/douyin_m00_v14/run.py'
+      - 'automation/douyin_m00_v14/jobs/*.json'
+
+permissions:
+  contents: read
+
+jobs:
+  m00:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install system tools
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests faster-whisper pycryptodome
+      - name: Download and transcribe Douyin
+        env:
+          DOUYIN_URL: https://v.douyin.com/in0JSnJSDlg/
+          AWEME_ID: 7144662970956631309
+        run: python automation/douyin_m00_v14/run.py
+      - name: Upload M00
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handu-v14-m00-7144662970956631309-${{ github.run_id }}
+          path: handu_m00/
+          retention-days: 7
+          if-no-files-found: warn
