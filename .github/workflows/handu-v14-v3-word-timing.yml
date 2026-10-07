@@ -1,0 +1,52 @@
+name: HANDU V1.4 V3 Word Timing
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/handu-v14-v3-word-timing.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  timing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install speech aligner
+        run: python -m pip install -q faster-whisper
+      - name: Download exact LucyLab artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p tts_artifact timing_out
+          gh api repos/thuongnguyen1542006-lang/lucylab-api-voice/actions/artifacts/11455626207/zip > /tmp/tts.zip
+          unzip -q /tmp/tts.zip -d tts_artifact
+          find tts_artifact -name voice.wav -print
+      - name: Transcribe Vietnamese voice with word timestamps
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from faster_whisper import WhisperModel
+          wav=next(Path("tts_artifact").rglob("voice.wav"))
+          model=WhisperModel("small",device="cpu",compute_type="int8")
+          segs,info=model.transcribe(str(wav),language="vi",beam_size=5,vad_filter=True,word_timestamps=True)
+          out=[]; words=[]
+          for seg in segs:
+              row={"start":seg.start,"end":seg.end,"text":seg.text.strip(),"words":[]}
+              for w in seg.words or []:
+                  x={"start":w.start,"end":w.end,"word":w.word,"probability":getattr(w,"probability",None)}
+                  row["words"].append(x); words.append(x)
+              out.append(row)
+          Path("timing_out/whisper_vi.json").write_text(json.dumps({"language":info.language,"probability":info.language_probability,"segments":out,"words":words},ensure_ascii=False,indent=2),encoding="utf-8")
+          Path("timing_out/whisper_vi.txt").write_text("\n".join(s["text"] for s in out),encoding="utf-8")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: handu-v14-v3-word-timing-${{ github.run_id }}
+          path: timing_out/
+          retention-days: 7
