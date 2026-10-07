@@ -1,0 +1,88 @@
+name: HANDU V1.4 M00 API Fallback
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/handu-v14-m00-api-fallback.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Resolve via public parser API
+        env:
+          DOUYIN_URL: https://v.douyin.com/in0JSnJSDlg/
+        run: |
+          mkdir -p handu_m00
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+          from pathlib import Path
+          src=os.environ["DOUYIN_URL"]
+          api="https://api.douyin.wtf/api/hybrid/video_data?url="+urllib.parse.quote(src,safe="")+"&minimal=false"
+          req=urllib.request.Request(api,headers={"User-Agent":"Mozilla/5.0"})
+          try:
+              with urllib.request.urlopen(req,timeout=90) as r:
+                  raw=r.read()
+                  Path("handu_m00/api_response.json").write_bytes(raw)
+                  print("api",r.status,len(raw))
+          except Exception as e:
+              Path("handu_m00/api_error.txt").write_text(repr(e))
+              raise
+          data=json.loads(raw)
+          root=data.get("data",data)
+          # tolerate raw Douyin response and hybrid wrapper shapes
+          item=None
+          if isinstance(root,dict):
+              if root.get("aweme_detail"): item=root.get("aweme_detail")
+              elif root.get("aweme_list"): item=(root.get("aweme_list") or [None])[0]
+              elif root.get("item_list"): item=(root.get("item_list") or [None])[0]
+              elif root.get("video_data"):
+                  vd=root.get("video_data") or {}
+                  for key in ("nwm_video_url","wm_video_url","video_url"):
+                      if vd.get(key):
+                          Path("handu_m00/direct_url.txt").write_text(vd[key])
+                          print("direct",key)
+                          raise SystemExit(0)
+              elif root.get("video"): item=root
+          if not item:
+              Path("handu_m00/shape.txt").write_text(str(list(root.keys()) if isinstance(root,dict) else type(root)))
+              raise SystemExit("no item in API response")
+          urls=[]
+          v=item.get("video") or {}
+          for key in ("play_addr","play_addr_h264","download_addr"):
+              x=v.get(key) or {}
+              if isinstance(x,dict):
+                  for u in x.get("url_list") or []:
+                      u=u.replace("playwm","play")
+                      if u not in urls: urls.append(u)
+          for br in v.get("bit_rate") or []:
+              x=(br or {}).get("play_addr") or {}
+              for u in x.get("url_list") or []:
+                  u=u.replace("playwm","play")
+                  if u not in urls: urls.append(u)
+          Path("handu_m00/candidates.json").write_text(json.dumps(urls,ensure_ascii=False,indent=2))
+          if not urls: raise SystemExit("no video URLs")
+          Path("handu_m00/direct_url.txt").write_text(urls[0])
+          PY
+      - name: Download source
+        run: |
+          URL=$(cat handu_m00/direct_url.txt)
+          curl -L --fail --retry 3 --connect-timeout 20 --max-time 300             -A "Mozilla/5.0" -e "https://www.douyin.com/" "$URL" -o handu_m00/source.mp4
+          test -s handu_m00/source.mp4
+      - name: Upload
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handu-v14-m00-api-${{ github.run_id }}
+          path: handu_m00/
+          retention-days: 7
+          if-no-files-found: warn
