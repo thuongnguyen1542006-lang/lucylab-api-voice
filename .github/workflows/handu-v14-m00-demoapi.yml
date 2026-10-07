@@ -10,11 +10,19 @@ permissions:
   contents: read
 
 jobs:
-  parse:
+  m00:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install media and speech tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          python -m pip install -q faster-whisper
       - name: Parse with DTK v5 demo
         env:
           DOUYIN_URL: https://v.douyin.com/in0JSnJSDlg/
@@ -26,19 +34,82 @@ jobs:
           import json, os
           print(json.dumps({"url":os.environ["DOUYIN_URL"]},ensure_ascii=False))
           PY
-          curl -sS -b handu_m00/jar -o handu_m00/parse_response.json -w '%{http_code}'             -X POST 'https://demo.douyin.wtf/api/v1/parse?wait=25'             -H 'content-type: application/json'             --data-binary @handu_m00/payload.json > handu_m00/http_code.txt
-          cat handu_m00/http_code.txt
+          curl -fsS -b handu_m00/jar -o handu_m00/parse_response.json             -X POST 'https://demo.douyin.wtf/api/v1/parse?wait=25'             -H 'content-type: application/json'             --data-binary @handu_m00/payload.json
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path("handu_m00/parse_response.json")
-          try:
-              d=json.loads(p.read_text())
-              print(json.dumps(d,ensure_ascii=False)[:5000])
-          except Exception as e:
-              print("parse response decode error",e)
+          d=json.loads(Path("handu_m00/parse_response.json").read_text())
+          assert d.get("success") is True, d
+          data=d.get("data") or {}
+          assert data.get("kind")=="video", data.get("kind")
+          v=((data.get("media") or {}).get("video") or {})
+          urls=[]
+          for u in [v.get("url"), *(v.get("urls") or [])]:
+              if u and u not in urls: urls.append(u)
+          assert urls, "no media url"
+          Path("handu_m00/video_urls.json").write_text(json.dumps(urls,ensure_ascii=False,indent=2))
+          Path("handu_m00/metadata.json").write_text(json.dumps({
+              "description":data.get("description"),
+              "author":data.get("author"),
+              "tags":data.get("tags"),
+              "video":{k:v.get(k) for k in ("width","height","format","size_bytes","watermark")}
+          },ensure_ascii=False,indent=2))
           PY
-      - name: Upload
+      - name: Download exact source
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          urls=json.loads(Path("handu_m00/video_urls.json").read_text())
+          errs=[]
+          for i,u in enumerate(urls):
+              out=Path("handu_m00")/f"candidate_{i}.mp4"
+              cp=subprocess.run(["curl","-L","--fail","--retry","2","--connect-timeout","20","--max-time","300",
+                  "-A","Mozilla/5.0","-e","https://www.douyin.com/",u,"-o",str(out)],capture_output=True,text=True)
+              if cp.returncode==0 and out.exists() and out.stat().st_size>200000:
+                  pr=subprocess.run(["ffprobe","-v","error","-show_entries","format=duration:stream=codec_type,width,height,codec_name","-of","json",str(out)],capture_output=True,text=True)
+                  try:
+                      probe=json.loads(pr.stdout)
+                  except Exception:
+                      probe={}
+                  types=[x.get("codec_type") for x in probe.get("streams",[])]
+                  if "video" in types and "audio" in types:
+                      out.replace("handu_m00/source.mp4")
+                      Path("handu_m00/ffprobe.json").write_text(json.dumps(probe,indent=2))
+                      break
+              errs.append({"i":i,"returncode":cp.returncode,"stderr":cp.stderr[-1000:],"size":out.stat().st_size if out.exists() else 0})
+          Path("handu_m00/download_errors.json").write_text(json.dumps(errs,ensure_ascii=False,indent=2))
+          assert Path("handu_m00/source.mp4").exists(), "no valid muxed source"
+          PY
+      - name: Generate review frames
+        run: |
+          mkdir -p handu_m00/frames
+          ffmpeg -y -i handu_m00/source.mp4 -vf "fps=1/2,scale=576:-2" -q:v 3 handu_m00/frames/f_%03d.jpg >/dev/null 2>&1
+          ffmpeg -y -i handu_m00/source.mp4 -vf "fps=1/2,scale=288:-2,tile=4x4:padding=4:margin=4" -frames:v 1 handu_m00/contact.jpg >/dev/null 2>&1 || true
+      - name: Transcribe Mandarin
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from faster_whisper import WhisperModel
+          model=WhisperModel("small",device="cpu",compute_type="int8")
+          segs,info=model.transcribe("handu_m00/source.mp4",language="zh",beam_size=5,vad_filter=True,word_timestamps=True)
+          out=[]; words=[]; srt=[]
+          def fmt(sec):
+              ms=int(round(sec*1000)); h=ms//3600000; ms%=3600000; m=ms//60000; ms%=60000; s=ms//1000; ms%=1000
+              return f"{h:02}:{m:02}:{s:02},{ms:03}"
+          for n,seg in enumerate(segs,1):
+              it={"id":n,"start":seg.start,"end":seg.end,"text":seg.text.strip(),"words":[]}
+              for w in seg.words or []:
+                  wi={"start":w.start,"end":w.end,"word":w.word,"probability":getattr(w,"probability",None)}
+                  it["words"].append(wi); words.append(wi)
+              out.append(it); srt += [str(n),f"{fmt(seg.start)} --> {fmt(seg.end)}",it["text"],""]
+          Path("handu_m00/transcript.json").write_text(json.dumps({"language":info.language,"probability":info.language_probability,"segments":out},ensure_ascii=False,indent=2))
+          Path("handu_m00/words.json").write_text(json.dumps(words,ensure_ascii=False,indent=2))
+          Path("handu_m00/transcript.txt").write_text("\n".join(x["text"] for x in out),encoding="utf-8")
+          Path("handu_m00/transcript.srt").write_text("\n".join(srt),encoding="utf-8")
+          PY
+      - name: Upload M00
         if: always()
         uses: actions/upload-artifact@v4
         with:
