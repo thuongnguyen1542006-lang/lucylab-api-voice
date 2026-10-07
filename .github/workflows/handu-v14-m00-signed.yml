@@ -1,0 +1,104 @@
+name: HANDU V1.4 M00 Signed Fetch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/handu-v14-m00-signed.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  m00:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install tools
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y ffmpeg git
+          git clone --depth 1 https://github.com/DLWangSan/douyin_parse.git /tmp/douyin_parse
+          python -m pip install -U pip
+          pip install requests gmssl faster-whisper
+      - name: Parse and download source
+        env:
+          DOUYIN_URL: https://v.douyin.com/in0JSnJSDlg/
+        run: |
+          mkdir -p handu_m00
+          PYTHONPATH=/tmp/douyin_parse python - <<'PY'
+          import json, os, sys, requests
+          from pathlib import Path
+          from douyin_video_parser import DouyinVideoParser
+          url=os.environ["DOUYIN_URL"]
+          p=DouyinVideoParser()
+          info=p.parse_video(url)
+          Path("handu_m00/parser_result.json").write_text(json.dumps(info,ensure_ascii=False,indent=2),encoding="utf-8")
+          if not info:
+              raise SystemExit("parser returned no video")
+          candidates=[]
+          if info.get("nwm_url"): candidates.append(info["nwm_url"])
+          for q in info.get("qualities") or []:
+              u=q.get("url")
+              if u and u not in candidates: candidates.append(u)
+          if not candidates:
+              raise SystemExit("no video urls")
+          h={"User-Agent":p.user_agent,"Referer":"https://www.douyin.com/"}
+          errors=[]
+          for i,u in enumerate(candidates):
+              try:
+                  r=requests.get(u,headers=h,stream=True,timeout=180,allow_redirects=True)
+                  r.raise_for_status()
+                  path=Path("handu_m00")/f"candidate_{i}.mp4"
+                  with path.open("wb") as f:
+                      for chunk in r.iter_content(1024*1024):
+                          if chunk: f.write(chunk)
+                  if path.stat().st_size>200000:
+                      path.replace("handu_m00/source.mp4")
+                      break
+                  errors.append({"i":i,"size":path.stat().st_size,"status":r.status_code})
+              except Exception as e:
+                  errors.append({"i":i,"error":str(e)})
+          Path("handu_m00/download_errors.json").write_text(json.dumps(errors,ensure_ascii=False,indent=2),encoding="utf-8")
+          if not Path("handu_m00/source.mp4").exists():
+              raise SystemExit("download failed")
+          PY
+          ffprobe -v error -show_streams -show_format -of json handu_m00/source.mp4 > handu_m00/ffprobe.json
+      - name: Frames and transcript
+        run: |
+          mkdir -p handu_m00/frames
+          ffmpeg -y -i handu_m00/source.mp4 -vf "fps=1/2,scale=576:-2" -q:v 3 handu_m00/frames/f_%03d.jpg >/dev/null 2>&1
+          ffmpeg -y -i handu_m00/source.mp4 -vf "fps=1/2,scale=288:-2,tile=4x4:padding=4:margin=4" -frames:v 1 handu_m00/contact.jpg >/dev/null 2>&1 || true
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from faster_whisper import WhisperModel
+          v="handu_m00/source.mp4"
+          model=WhisperModel("small",device="cpu",compute_type="int8")
+          segs,info=model.transcribe(v,language="zh",beam_size=5,vad_filter=True,word_timestamps=True)
+          out=[]; words=[]; lines=[]
+          def ts(s):
+              ms=int(round(s*1000)); h=ms//3600000; ms%=3600000; m=ms//60000; ms%=60000; sec=ms//1000; ms%=1000
+              return f"{h:02}:{m:02}:{sec:02},{ms:03}"
+          for n,s in enumerate(segs,1):
+              it={"id":n,"start":s.start,"end":s.end,"text":s.text.strip(),"words":[]}
+              for w in s.words or []:
+                  wi={"start":w.start,"end":w.end,"word":w.word,"probability":getattr(w,"probability",None)}
+                  it["words"].append(wi); words.append(wi)
+              out.append(it); lines += [str(n),f"{ts(s.start)} --> {ts(s.end)}",it["text"],""]
+          Path("handu_m00/transcript.json").write_text(json.dumps({"language":info.language,"probability":info.language_probability,"segments":out},ensure_ascii=False,indent=2),encoding="utf-8")
+          Path("handu_m00/words.json").write_text(json.dumps(words,ensure_ascii=False,indent=2),encoding="utf-8")
+          Path("handu_m00/transcript.txt").write_text("\n".join(x["text"] for x in out),encoding="utf-8")
+          Path("handu_m00/transcript.srt").write_text("\n".join(lines),encoding="utf-8")
+          PY
+      - name: Upload M00
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handu-v14-m00-signed-${{ github.run_id }}
+          path: handu_m00/
+          retention-days: 7
+          if-no-files-found: warn
