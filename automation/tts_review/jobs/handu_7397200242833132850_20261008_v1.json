@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "stage": "review_timing",
+  "jobId": "handu_7397200242833132850_20261008_v1",
+  "voiceAlias": "chi-mai",
+  "voiceId": "cLZiqtzLcKYqwYrWJemAJK",
+  "voiceSpeed": 1,
+  "bridgeSha256": "04cdfc5de807d9c39176261682e898f84f6f591c32a285ea9e8aa077a3613dc7",
+  "scenes": [
+    {
+      "sceneId": "full_review",
+      "text": "Đây là đầu phun tưới cây dạng tỏa sương. Chỉ cần nối vào vòi nước, xoay khớp cho chặt rồi điều chỉnh núm bên hông. Tia nước tỏa đều và mềm hơn, giúp tưới rau, tưới hoa mà hạn chế làm dập lá hay xói đất."
+    }
+  ]
+}
